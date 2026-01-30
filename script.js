@@ -19,22 +19,56 @@ function initNavigation() {
     const header = document.getElementById('header');
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
+    const navBackdrop = document.getElementById('nav-backdrop');
     const navLinks = document.querySelectorAll('.nav-link');
+
+    // Function to close mobile menu
+    function closeMenu() {
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        if (navBackdrop) navBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Function to open mobile menu
+    function openMenu() {
+        navToggle.classList.add('active');
+        navMenu.classList.add('active');
+        if (navBackdrop) navBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 
     // Mobile menu toggle
     navToggle.addEventListener('click', function() {
-        this.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        if (navMenu.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
+
+    // Close menu on backdrop click
+    if (navBackdrop) {
+        navBackdrop.addEventListener('click', closeMenu);
+    }
 
     // Close menu on link click
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+
+    // Close menu on window resize (if switching to desktop)
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
     });
 
     // Header scroll effect

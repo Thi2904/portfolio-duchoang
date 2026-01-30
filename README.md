@@ -144,7 +144,7 @@ Thay thế URL hình ảnh trong `index.html` (từ Unsplash hoặc nguồn khá
 
 ## 👨‍💻 Developer
 
-Developed by [Your Name]
+Developed by Hoàng Đình Thi
 
 ---
 
